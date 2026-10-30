@@ -902,6 +902,16 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
                 }
             ]
         },
+        "gameMode": {
+            "disableAnimations": true,
+            "disableShadows": true,
+            "disableBlur": true,
+            "removeGaps": true,
+            "removeRounding": true,
+            "thinBorders": true,
+            "allowTearing": true,
+            "hyprOverrides": {}
+        },
         "quickToggles": [
             {
                 "id": "wifi",

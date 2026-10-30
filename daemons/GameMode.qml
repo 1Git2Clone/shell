@@ -10,17 +10,30 @@ import qs.services
 Scope {
     id: root
 
+    readonly property var hyprOptions: {
+        const cfg = GlobalConfig.utilities.gameMode;
+        const opts = {};
+        if (cfg.disableAnimations)
+            opts["animations:enabled"] = 0;
+        if (cfg.disableShadows)
+            opts["decoration:shadow:enabled"] = 0;
+        if (cfg.disableBlur)
+            opts["decoration:blur:enabled"] = 0;
+        if (cfg.removeGaps) {
+            opts["general:gaps_in"] = 0;
+            opts["general:gaps_out"] = 0;
+        }
+        if (cfg.thinBorders)
+            opts["general:border_size"] = 1;
+        if (cfg.removeRounding)
+            opts["decoration:rounding"] = 0;
+        if (cfg.allowTearing)
+            opts["general:allow_tearing"] = 1;
+        return Object.assign(opts, cfg.hyprOverrides);
+    }
+
     function applyGameMode(): void {
-        Hypr.extras.applyOptions({
-            "animations:enabled": 0,
-            "decoration:shadow:enabled": 0,
-            "decoration:blur:enabled": 0,
-            "general:gaps_in": 0,
-            "general:gaps_out": 0,
-            "general:border_size": 1,
-            "decoration:rounding": 0,
-            "general:allow_tearing": 1
-        });
+        Hypr.extras.applyOptions(root.hyprOptions);
     }
 
     function syncState(enableDisable: bool): void {
@@ -35,6 +48,11 @@ Scope {
         }
     }
 
+    // Reload to restore options that are no longer overridden; onConfigReloaded reapplies the rest
+    onHyprOptionsChanged: {
+        if (RuntimeState.gameMode)
+            Hypr.extras.message("reload");
+    }
     Component.onCompleted: syncState(false)
 
     Connections {
