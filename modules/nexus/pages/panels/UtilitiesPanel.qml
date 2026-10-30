@@ -142,5 +142,61 @@ PageBase {
             checked: root.isToggleOn("vpn")
             onToggled: root.setToggleOn("vpn", checked)
         }
+
+        // Game mode
+        SectionHeader {
+            text: Tr.tr("Game mode")
+        }
+
+        ToggleRow {
+            first: true
+            text: Tr.tr("Disable animations")
+            subtext: Tr.tr("Turn off Hyprland animations")
+            checked: GlobalConfig.utilities.gameMode.disableAnimations
+            onToggled: GlobalConfig.utilities.gameMode.disableAnimations = checked
+        }
+
+        ToggleRow {
+            text: Tr.tr("Disable shadows")
+            subtext: Tr.tr("Turn off window shadows")
+            checked: GlobalConfig.utilities.gameMode.disableShadows
+            onToggled: GlobalConfig.utilities.gameMode.disableShadows = checked
+        }
+
+        ToggleRow {
+            text: Tr.tr("Disable blur")
+            subtext: Tr.tr("Turn off background blur")
+            checked: GlobalConfig.utilities.gameMode.disableBlur
+            onToggled: GlobalConfig.utilities.gameMode.disableBlur = checked
+        }
+
+        ToggleRow {
+            text: Tr.tr("Remove gaps")
+            subtext: Tr.tr("Remove gaps around windows")
+            checked: GlobalConfig.utilities.gameMode.removeGaps
+            onToggled: GlobalConfig.utilities.gameMode.removeGaps = checked
+        }
+
+        ToggleRow {
+            text: Tr.tr("Remove rounding")
+            subtext: Tr.tr("Square off window corners")
+            checked: GlobalConfig.utilities.gameMode.removeRounding
+            onToggled: GlobalConfig.utilities.gameMode.removeRounding = checked
+        }
+
+        ToggleRow {
+            text: Tr.tr("Thin borders")
+            subtext: Tr.tr("Set window borders to 1px")
+            checked: GlobalConfig.utilities.gameMode.thinBorders
+            onToggled: GlobalConfig.utilities.gameMode.thinBorders = checked
+        }
+
+        ToggleRow {
+            last: true
+            text: Tr.tr("Allow tearing")
+            subtext: Tr.tr("Allow screen tearing for windows that request it")
+            checked: GlobalConfig.utilities.gameMode.allowTearing
+            onToggled: GlobalConfig.utilities.gameMode.allowTearing = checked
+        }
     }
 }

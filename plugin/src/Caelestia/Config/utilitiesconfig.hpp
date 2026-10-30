@@ -2,6 +2,7 @@
 
 #include <qstring.h>
 #include <qvariantlist.h>
+#include <qvariantmap.h>
 
 #include "settings/objectnode.hpp"
 #include "common.hpp"
@@ -48,6 +49,20 @@ class UtilitiesVpn : public settings::ObjectNode {
     CONFIG_PROPERTY(QString, selectedProvider, {})
 };
 
+class UtilitiesGameMode : public settings::ObjectNode {
+    CONFIG_NODE(UtilitiesGameMode, settings::ObjectNode)
+
+    CONFIG_PROPERTY(bool, disableAnimations, true)
+    CONFIG_PROPERTY(bool, disableShadows, true)
+    CONFIG_PROPERTY(bool, disableBlur, true)
+    CONFIG_PROPERTY(bool, removeGaps, true)
+    CONFIG_PROPERTY(bool, removeRounding, true)
+    CONFIG_PROPERTY(bool, thinBorders, true)
+    CONFIG_PROPERTY(bool, allowTearing, true)
+    // Raw Hyprland options applied last, e.g. { "input:accel_profile": "flat" }
+    CONFIG_PROPERTY(QVariantMap, hyprOverrides, {})
+};
+
 class UtilitiesCards : public settings::ObjectNode {
     CONFIG_NODE(UtilitiesCards, settings::ObjectNode)
 
@@ -64,6 +79,7 @@ class UtilitiesConfig : public settings::ObjectNode {
     CONFIG_SUBOBJECT(UtilitiesCards, cards)
     CONFIG_GLOBAL_SUBOBJECT(UtilitiesToasts, toasts)
     CONFIG_GLOBAL_SUBOBJECT(UtilitiesVpn, vpn)
+    CONFIG_GLOBAL_SUBOBJECT(UtilitiesGameMode, gameMode)
     CONFIG_LIST(EntryList, quickToggles,
         DEFAULT_ARG({
             LIST_ENTRY(wifi, true),
