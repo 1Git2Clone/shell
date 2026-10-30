@@ -99,7 +99,11 @@ void HyprExtras::applyOptions(const QVariantHash& options) {
             request += u"keyword "_s + it.key() + u' ' + it.value().toString() + u';';
         } else {
             const auto parts = it.key().split(u':');
-            request += u"eval hl.config({ "_s + parts.join(u" = { "_s) + u" = "_s + it.value().toString() +
+            auto value = it.value().toString();
+            // Strings must be quoted in Lua, otherwise they are read as variable names
+            if (it.value().typeId() == QMetaType::QString)
+                value = u'"' + value.replace(u'\\', u"\\\\"_s).replace(u'"', u"\\\""_s) + u'"';
+            request += u"eval hl.config({ "_s + parts.join(u" = { "_s) + u" = "_s + value +
                        u" }"_s.repeated(parts.size() - 1) + u" });"_s;
         }
     }
